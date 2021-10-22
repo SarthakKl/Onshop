@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "75221083269",
+    "project_id": "mojoshop-bb85e",
+    "storage_bucket": "mojoshop-bb85e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:75221083269:android:6bac8b1d7feade047575ec",
+        "android_client_info": {
+          "package_name": "com.example.shoppingapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "75221083269-06t9priondr9qdt0ba89irpld7dnlpic.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.shoppingapp",
+            "certificate_hash": "0fdf0db9b3259c8ab91b8b7e8f69589ccb7b88cd"
+          }
+        },
+        {
+          "client_id": "75221083269-1vmhmhf8bkoumcsjb619fg72ig8d7nh8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCExMmnq5T8ryc73CJ7PPZG_MbjkQ9sovg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "75221083269-1vmhmhf8bkoumcsjb619fg72ig8d7nh8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

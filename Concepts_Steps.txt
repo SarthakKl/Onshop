@@ -1,0 +1,123 @@
+Concepst/Steps
+
+1) First we have to create CustomEditText class in which we are gonna add a function applyfont() which will set the font of every text in the editText 
+     to be of the type which we have imported in the assets folder( We have to create this assets folder also and import the desired font).
+	
+	class CustomEditText(context: Context,attributeSet: AttributeSet):AppCompatEditText(context,attributeSet) {
+    		init{
+       			applyFont()
+   		}
+   		private fun applyFont(){
+        			val boldTypeFace: Typeface =
+            			Typeface.createFromAsset(context.assets,"montserrat.regular.ttf") // montserrat.bold.ttf for bold font
+        			typeface=boldTypeFace
+    		}
+	}
+As u can see we have inherited from the AppCompatEditText and created our own EditText( This is same as we have done in the drawing app where we 
+inherited from View). Similarly we will do the same for Buttons and create a CustomButtom.
+
+2) Then we have to create a new loginActivity, and add different viewGroups like editText, Buttons, e.t.c. in the respective xml file of the loginActivity so 
+     that we get our desired login screen.
+ 
+3) Now we are gonna create a new RegisterActivity and the set the xml for this activity so that we can register the new user in our app. 
+     The components which we have to add in the xml of the register activity are as follows:-
+	a) Toolbar-> Create an Account and a back button 
+	b) CustomEditText-> First Name
+	c) CustomEditText-> Last Name
+	d) CustomEditText-> Email
+	e) CustomEditText-> Password
+	f) CustomEditText-> Confirm Password
+	g) CheckBox-> Agree to Terms and Conditions
+	h) Button-> Register Button
+	i) TextView's-> Already have an account? Login
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------   
+   a) We will set the theme of the register activity to NoActionBar. Also for this activity we are gonna use our toolbar as actionbar, for that we have to do the 
+       following:-
+	private fun setUpActionBar(){
+       		 setSupportActionBar(findViewById(R.id.register_activity_toolbar))
+        		val actionBar=supportActionBar
+        		actionBar?.setDisplayShowTitleEnabled(false)
+        		if(actionBar!=null){
+            			actionBar.setDisplayHomeAsUpEnabled(true)
+            			actionBar.setHomeAsUpIndicator(R.drawable.ic_back)
+        		}
+       		 findViewById<Toolbar>(R.id.register_activity_toolbar).setNavigationOnClickListener { onBackPressed() }
+    	}
+       The above function will be in the RegisteActivity.
+
+ b) We will set all the diferent custom edit text, checkbox, Register button and textView for different purposes. Then we will validate the user details when the
+      register button is clicked. Validation means we are gonna check if some of the fields( first name, last name....) are not left empty.
+      We can use the isEmpty functionality of TextUtils for that-
+	TextUtils.isEmpty(findViewById<CustomEditText>(R.id.first_name).text.toString().trim{it<=' '})  // Returns true if the string is empty
+      Here trim{} will remove all the empty spaces if the user has accidently typed while entering their details.
+
+c) After validation we will authenticate(store) the email address and password in the Firebase. For this we will use FirebaseAuth
+
+	FirebaseAuth.getInstance().createUserWithEmailAndPassword(email,password)
+                	.addOnCompleteListener{task->
+                    if(task.isSuccessful){
+                        hideProgressBar()
+                        val firebaseUser=task.result!!.user
+                        showSnackBar("Registration Successful",false)
+
+                        val intent=Intent(this,MainActivity::class.java)
+                        intent.flags=Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                        intent.putExtra("email",email)
+                        intent.putExtra("user_id",firebaseUser!!.uid)
+                        intent.putExtra("First_Name",findViewById<CustomEditText>(R.id.first_name).text.toString())
+                        intent.putExtra("Last_Name",findViewById<CustomEditText>(R.id.last_name).text.toString())
+                        startActivity(intent)
+                        finish()
+                    }
+                    else{
+                        showSnackBar(task.exception!!.message.toString(),true)
+                    }
+                }
+   If the registration is successfull then user will automatically directed to MainActivity else the error message will be shown using snackBar.
+    
+    open fun showSnackBar(message:String,error:Boolean){
+        val sb=Snackbar.make(findViewById(android.R.id.content),message,Snackbar.LENGTH_LONG)     //android.R.content gives the rootView of the activity
+
+        val snackBarView=sb.view
+
+        if(error){
+            snackBarView.setBackgroundColor(
+                ContextCompat.getColor(
+                    this@NotifsAndDialog,
+                    R.color.SnackBar_error_red
+                )
+            )
+        }
+        else{
+            snackBarView.setBackgroundColor(
+                ContextCompat.getColor(
+                    this@NotifsAndDialog,
+                    R.color.SnackBar_error_green
+                )
+            )
+        }
+
+        snackBarView.setPadding(0, 0, 0, 0) //set padding to 0
+        sb.show()
+    }
+
+d) After registration we can also login from the loginActivity. And for this we will again use the FirebaseAuth
+	FirebaseAuth.getInstance().signInWithEmailAndPassword(email,password)   // email and password are retrieved using findViewById()
+                    .addOnCompleteListener{task->
+                        if(task.isSuccessful){
+                            hideProgressBar()
+                            val firebaseUser=task.result!!.user
+                            showSnackBar("Login Successfully as $email",false)
+
+                            val intent=Intent(this,MainActivity::class.java)
+                            intent.flags=Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                            intent.putExtra("email",email)
+                            intent.putExtra("user_id",firebaseUser!!.uid)
+                            startActivity(intent)
+                            finish()
+                        }
+                        else{
+                            showSnackBar(task.exception!!.message.toString(),true)
+                        }
+                    }
+ ----------------------------------------------------------------------------------------------------------------------------------------------------------------------
