@@ -30,7 +30,8 @@ object Constants {
     const val stockQuantity="stockQuantity"
     const val cartId="id"
 
-    const val cartList="cartList"
+    const val id="id"
+
     const val selectedAddress="address"
 
     const val address="Addresses"
@@ -41,5 +42,8 @@ object Constants {
     const val selectAddress="selectAddress"
 
     const val orderDetails="OrderDetails"
+
+    const val EXTRA_ADDRESS_DETAILS="AddressDetails"
+
 
 }

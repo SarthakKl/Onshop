@@ -25,7 +25,13 @@ class AddressActivityRvAdapter(private val context: Context,
             LayoutInflater.from(context).inflate(R.layout.address_rv_item,parent,false)
         )
     }
-
+    fun notifyEditItem(activity:Activity,position: Int){
+        val intent=Intent(context,AddAddressActivity::class.java)
+        intent.putExtra(Constants.EXTRA_ADDRESS_DETAILS,addresses[position])
+        activity.startActivity(intent)
+        notifyItemChanged(position)
+        activity.finish()
+    }
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val address=addresses[position]
 

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Shopping App</string>
+    <string name="app_name">Onshop</string>
     <string name="onshop">ONSHOP</string>
     <string name="loginimage">LoginImage</string>
     <string name="email_id">Email Id</string>
@@ -59,9 +59,9 @@
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
     <string name="title_activity_main3">MainActivity3</string>
-    <string name="orders"><b>ONSHOP</b></string>
-    <string name="Shop"><b>ONSHOP</b></string>
-    <string name="products"><b>ONSHOP</b></string>
+    <string name="orders"><b>ORDERS</b></string>
+    <string name="Shop"><b>SHOP</b></string>
+    <string name="products"><b>YOUR PRODUCTS</b></string>
     <string name="products_bottomNav">Products</string>
     <string name="orders_bottomNav">Orders</string>
     <string name="Shop_bottomNav">Shop</string>

@@ -13,6 +13,7 @@
         android:minHeight="50sp"
         >
         <com.example.shoppingapp.Utils.CustomTextView
+            android:id="@+id/addAddress_toolbarTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="ADD ADDRESS"

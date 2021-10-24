@@ -9,10 +9,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.cardview.widget.CardView
-import com.example.shoppingapp.FireStore.Cart
-import com.example.shoppingapp.FireStore.Constants
-import com.example.shoppingapp.FireStore.FirestoreClass
-import com.example.shoppingapp.FireStore.Products
+import com.example.shoppingapp.FireStore.*
 import com.example.shoppingapp.R
 import com.example.shoppingapp.Utils.CommonMethodsClass
 import com.example.shoppingapp.Utils.CustomButton
@@ -32,11 +29,16 @@ class ProductDetailsActivity : CommonMethodsClass() {
         findViewById<CustomButton>(R.id.productDetails_addToCart).setOnClickListener {
             showProgressBar()
             val itemInCart= Cart(FirestoreClass().getCurrentUserId(),productDetail!!.id,productDetail!!.productName,productDetail!!.price.toString(),productDetail!!.productImage,1,productDetail!!.quantity)
-            FirestoreClass().addProductsToCart(this,itemInCart)
+            FirestoreClass().addProductsToCart(this,itemInCart,false)
         }
         findViewById<CustomButton>(R.id.productDetails_goToCart).setOnClickListener {
             val intent= Intent(this,CartActivity::class.java)
             startActivity(intent)
+        }
+        findViewById<CustomButton>(R.id.productDetails_BuyNow).setOnClickListener {
+            showProgressBar()
+            val itemInCart= Cart(FirestoreClass().getCurrentUserId(),productDetail!!.id,productDetail!!.productName,productDetail!!.price.toString(),productDetail!!.productImage,1,productDetail!!.quantity)
+            FirestoreClass().addProductsToCart(this,itemInCart,true)
         }
     }
     private fun checkIfAlreadyInCart(){
@@ -52,9 +54,15 @@ class ProductDetailsActivity : CommonMethodsClass() {
             findViewById<CustomButton>(R.id.productDetails_addToCart).visibility=View.GONE
         }
     }
-    fun addProductToCartSuccess(){
+    fun addProductToCartSuccess(directOrder:Boolean){
         hideProgressBar()
-        findViewById<CustomButton>(R.id.productDetails_addToCart).visibility=View.GONE
+        if(!directOrder)
+            findViewById<CustomButton>(R.id.productDetails_addToCart).visibility=View.GONE
+        else if(directOrder){
+            val intent=Intent(this,AddressActivity::class.java)
+            intent.putExtra(Constants.selectAddress,true)
+            startActivity(intent)
+        }
     }
     private fun settingProductDetailsActivity(){
         productDetail=intent.getParcelableExtra(Constants.productDetails)

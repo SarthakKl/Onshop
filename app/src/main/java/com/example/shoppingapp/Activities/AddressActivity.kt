@@ -4,17 +4,17 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
-import androidx.appcompat.widget.Toolbar
 import androidx.cardview.widget.CardView
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.shoppingapp.FireStore.Address
-import com.example.shoppingapp.FireStore.Cart
 import com.example.shoppingapp.FireStore.Constants
 import com.example.shoppingapp.FireStore.FirestoreClass
 import com.example.shoppingapp.R
 import com.example.shoppingapp.Utils.CommonMethodsClass
 import com.example.shoppingapp.Utils.CustomTextView
+import com.example.shoppingapp.Utils.SwipeToEditCallback
 
 class AddressActivity : CommonMethodsClass(),View.OnClickListener {
     private var selectAddress:Boolean=false
@@ -34,11 +34,6 @@ class AddressActivity : CommonMethodsClass(),View.OnClickListener {
         super.onResume()
         getUserAddress()
     }
-
-    override fun onRestart() {
-        super.onRestart()
-        getUserAddress()
-    }
     private fun getUserAddress(){
         FirestoreClass().getUserAddress(this,FirestoreClass().getCurrentUserId())
     }
@@ -49,6 +44,19 @@ class AddressActivity : CommonMethodsClass(),View.OnClickListener {
 
             addressRv.adapter=AddressActivityRvAdapter(this,addresses,selectAddress)
             addressRv.layoutManager=LinearLayoutManager(this)
+
+            val editSwipeHandler=object: SwipeToEditCallback(this){
+                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                    val adapter = addressRv.adapter as AddressActivityRvAdapter
+                    adapter.notifyEditItem(
+                        this@AddressActivity,
+                        viewHolder.absoluteAdapterPosition
+                    )
+                }
+            }
+
+            val editItemTouchHelper= ItemTouchHelper(editSwipeHandler)
+            editItemTouchHelper.attachToRecyclerView(addressRv)
         }
         else{
             findViewById<RecyclerView>(R.id.address_rv).visibility=View.GONE
@@ -59,6 +67,7 @@ class AddressActivity : CommonMethodsClass(),View.OnClickListener {
     override fun onClick(view: View?) {
         if(view!!.id==R.id.address_AddAddress) {
             startActivity(Intent(this, AddAddressActivity::class.java))
+            finish()
         }
     }
 

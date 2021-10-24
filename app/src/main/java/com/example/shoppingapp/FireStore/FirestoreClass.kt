@@ -290,13 +290,13 @@ class FirestoreClass:AppCompatActivity(){
      * For creating a new document with the provided fields(Cart class in the Firestore in the the
      * Cart collection
      * FirebaseFirestore*/
-    fun addProductsToCart(activity:ProductDetailsActivity,item:Cart){
+    fun addProductsToCart(activity:ProductDetailsActivity,item:Cart,directOrder:Boolean){
         val db=FirebaseFirestore.getInstance()
 
         db.collection(Constants.cart).document()
             .set(item, SetOptions.merge())
             .addOnSuccessListener {
-                activity.addProductToCartSuccess()
+                activity.addProductToCartSuccess(directOrder)
             }
             .addOnFailureListener {
                 activity.hideProgressBar()
@@ -492,6 +492,20 @@ class FirestoreClass:AppCompatActivity(){
                 Log.e("addAddress",it.message.toString())
             }
     }
+    private fun updateAddressId(id:String){
+        val hash=HashMap<String,Any>()
+        hash[Constants.id]=id
+
+        FirebaseFirestore.getInstance().collection(Constants.address)
+            .document(id)
+            .update(hash)
+            .addOnSuccessListener {
+                Log.e("updateAddressId","Success")
+            }
+            .addOnFailureListener {
+                Log.e("updateAddressId","Failure")
+            }
+    }
     /**
      * Used by AddressActivity
      * For getting the addres of the user
@@ -508,6 +522,7 @@ class FirestoreClass:AppCompatActivity(){
                     for(i in documents){
                         val address=i.toObject(Address::class.java)
                         address!!.id=i.id
+                        updateAddressId(i.id)
                         addresses.add(address)
                     }
                     when(activity){
@@ -521,6 +536,18 @@ class FirestoreClass:AppCompatActivity(){
                 Log.e("getUserAddress",it.message.toString())
             }
 
+    }
+    fun editAddress(activity:AddAddressActivity,editedAdd:HashMap<String,Any>,id:String){
+        val db=FirebaseFirestore.getInstance()
+        db.collection(Constants.address)
+            .document(id)
+            .update(editedAdd)
+            .addOnSuccessListener {
+                activity.addressAddedSuccessfully()
+            }
+            .addOnFailureListener {
+                Log.e("editAddress","edit Failed")
+            }
     }
     fun updateStock(activity: OrderActivity,cartList:ArrayList<Cart>){
         val db=FirebaseFirestore.getInstance()
