@@ -16,6 +16,6 @@ Onshop is a dynamic shopping application model developed using kotlin and Google
 # Screenshots
 
 <pre>
-<img src="https://github.com/SarthakKl/Onshop/blob/master/app/ss1.jpeg" width="200" height="400"/>
-<img src="https://github.com/SarthakKl/Onshop/blob/master/app/ss2.jpeg" width="200" height="400"/>
+<img src="https://github.com/SarthakKl/Onshop/blob/master/app/ss1.jpeg" width="200" height="400"/>    <img src="https://github.com/SarthakKl/Onshop/blob/master/app/ss2.jpeg" width="200" height="400"/>    <img src="https://github.com/SarthakKl/Onshop/blob/master/app/ss3.jpeg" width="200" height="400"/>    <img src="https://github.com/SarthakKl/Onshop/blob/master/app/ss4.jpeg" width="200" height="400"/>    <img src="https://github.com/SarthakKl/Onshop/blob/master/app/ss5.jpeg" width="200" height="400"/>    <img src="https://github.com/SarthakKl/Onshop/blob/master/app/ss6.jpeg" width="200" height="400"/>    <img src="https://github.com/SarthakKl/Onshop/blob/master/app/ss7.jpeg" width="200" height="400"/>    <img src="https://github.com/SarthakKl/Onshop/blob/master/app/ss8.jpeg" width="200" height="400"/>    <img src="https://github.com/SarthakKl/Onshop/blob/master/app/ss9.jpeg" width="200" height="400"/>
+
 </pre>
