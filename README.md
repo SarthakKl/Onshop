@@ -22,7 +22,7 @@ Onshop is a dynamic shopping application model developed using kotlin and Google
 
 # Permissions
 
-No permissions are required for this app.
+  No permissions are required for this app.
 
 # Third party Libraries
 
