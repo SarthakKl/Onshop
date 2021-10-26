@@ -15,4 +15,6 @@ Onshop is a dynamic shopping application model developed using kotlin and Google
 
 # Screenshots
 
-
+<pre>
+<img src="https://github.com/SarthakKl/Onshop/blob/master/app/ss1.jpeg" width="200" height="400"/>
+</pre>
