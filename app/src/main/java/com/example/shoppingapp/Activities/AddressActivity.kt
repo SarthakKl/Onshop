@@ -66,7 +66,9 @@ class AddressActivity : CommonMethodsClass(),View.OnClickListener {
 
     override fun onClick(view: View?) {
         if(view!!.id==R.id.address_AddAddress) {
-            startActivity(Intent(this, AddAddressActivity::class.java))
+            val intent=Intent(this, AddAddressActivity::class.java)
+            intent.putExtra(Constants.selectAddress,selectAddress)
+            startActivity(intent)
             finish()
         }
     }

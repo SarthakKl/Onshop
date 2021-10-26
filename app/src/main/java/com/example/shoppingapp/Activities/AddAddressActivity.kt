@@ -13,6 +13,7 @@ import com.example.shoppingapp.Utils.*
 class AddAddressActivity : CommonMethodsClass() {
     private var addressDetails:Address?=null
     private var editAdd=false
+    private var selectAddress=false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +31,9 @@ class AddAddressActivity : CommonMethodsClass() {
         val homeAdd=findViewById<CustomRadioButton>(R.id.address_homeAdd)
         val workAdd=findViewById<CustomRadioButton>(R.id.address_workAdd)
 
+        if(intent.hasExtra(Constants.selectAddress)){
+            selectAddress=intent.getBooleanExtra(Constants.EXTRA_ADDRESS_DETAILS,false)
+        }
         if(intent.hasExtra(Constants.EXTRA_ADDRESS_DETAILS)){
             editAdd=true
             findViewById<CustomTextView>(R.id.addAddress_toolbarTitle).text="EDIT ADDRESS"
@@ -92,6 +96,7 @@ class AddAddressActivity : CommonMethodsClass() {
 
     override fun onBackPressed() {
         val intent= Intent(this,AddressActivity::class.java)
+        intent.putExtra(Constants.selectAddress,selectAddress)
         startActivity(intent)
         finish()
     }
